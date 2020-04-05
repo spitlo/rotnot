@@ -13,6 +13,7 @@ const { getMidiNote } = require('./lib/midi')
 const { getBasename, getWavFilesInDirectory } = require('./lib/files')
 const { setRootNote } = require('./lib/wavefile')
 const { version } = require('./package.json')
+const config = require('./config')
 
 const { log } = console
 
@@ -105,13 +106,8 @@ const main = async () => {
       chalk.green(midiNotes[index][0]),
       chalk.yellow(midiNotes[index][1]),
     ])
-    estimates.unshift(['Sample name', 'Guesstimated note', 'MIDI note'])
-    log(
-      table(estimates, {
-        drawHorizontalLine: (index, size) =>
-          index < 2 || (index - 1) % 5 === 0 || index === size,
-      })
-    )
+    estimates.unshift(['Sample name', 'Guess', 'MIDI note'])
+    log(table(estimates, config.table))
 
     // Ask user for action. Abort, do all or do some
     log('We found the above matches.')

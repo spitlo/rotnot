@@ -12,12 +12,13 @@ const {
 const { getMidiNote } = require('./lib/midi')
 const { getBasename, getWavFilesInDirectory } = require('./lib/files')
 const { setRootNote } = require('./lib/wavefile')
+const { version } = require('./package.json')
 
 const { log } = console
 
 const logo = `
                                                   #######
- ...::: Note detection for multi samples.         ############.
+ .::: Note detection for multi samples            ############.
                                                   ##         ###
 '########:::'#######::'########:'##::: ##:::::::: ##:'########:
  ##.... ##:'##.... ##:... ##..:: ###:: ##:::::::: ##:... ##..::
@@ -27,6 +28,7 @@ const logo = `
  ##::. ##:: ##:::: ##:::: ##:::: ##:. ###: #########:::: ##::::
  ##:::. ##:. #######::::: ##:::: ##::. ##:. #######::::: ##::::
 ..:::::..:::.......::::::..:::::..::::..:::.......::::::..:::::
+                                                         v${version}
 `
 
 const handleFiles = async (files, midiNotes) => {
@@ -53,6 +55,27 @@ const handleFiles = async (files, midiNotes) => {
     }
   }
   return { successes, fails, skips }
+}
+
+/*
+ * Takes results from handleFiles and returns a formatted and colored
+ * string summary. */
+const getSummary = (results) => {
+  const { successes, skips, fails } = results
+  return `${chalk.green(successes.length)} succeeded, ${chalk.yellow(
+    skips.length
+  )} were skipped, and ${chalk.red(fails.length)} failed.`
+}
+
+/*
+ * Takes a list of samples picked by users and find the corresponding
+ * files in the original list. */
+const resolveSamples = (samples, files) => {
+  const filePaths = samples.map((sample) => {
+    const cleanSample = sample.split(' (')[0]
+    return files.find((file) => file.includes(cleanSample))
+  })
+  return filePaths
 }
 
 const main = async () => {
@@ -104,11 +127,7 @@ const main = async () => {
       case 'all':
         results = await handleFiles(files, midiNotes)
         log(`Done! Out of ${files.length} files:`)
-        log(
-          `${chalk.green(results.successes.length)} succeeded, ${chalk.yellow(
-            results.skips.length
-          )} were skipped, and ${chalk.red(results.fails.length)} failed.`
-        )
+        log(getSummary(results))
         break
 
       case 'some':
@@ -117,7 +136,8 @@ const main = async () => {
         const { samples } = allResults
         const batchFiles = resolveSamples(samples, files)
         results = await handleFiles(batchFiles, midiNotes)
-        log(results)
+        log(`Done! Out of the ${files.length} files you picked:`)
+        log(getSummary(results))
 
       default:
         process.exit(1)

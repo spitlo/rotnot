@@ -1,5 +1,7 @@
 # Rotnot
 
+![Screenshot of rotnot](screens/screenshot.png)
+
 ## What is this?
 Rotnot tries to figure out the notes of sound samples based on their filename, and save that note as meta data in the file.
 

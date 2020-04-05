@@ -1,0 +1,27 @@
+{
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  "files.autoSave": "off",
+
+  // Don’t use built-in formatter, use stylelint
+  // https://github.com/shinnn/vscode-stylelint
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "[scss]": {
+    "editor.formatOnSave": true,
+  },
+
+  "files.exclude": {
+    "**/.cache": true,
+    "**/.firebase": true,
+    "**/node_modules": true,
+  },
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.format.enable": true,
+  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  "[typescript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+}

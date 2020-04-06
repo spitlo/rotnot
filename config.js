@@ -1,11 +1,11 @@
 module.exports = {
   table: {
     drawHorizontalLine: (index, size) =>
-      index < 2 || (index - 1) % 5 === 0 || index === size,
+      index < 2 || (size > 9 && (index - 1) % 10 === 0) || index === size,
     columns: {
       0: {
         alignment: 'left',
-        width: 33,
+        width: 24,
       },
       1: {
         alignment: 'right',

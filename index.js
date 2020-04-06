@@ -87,7 +87,7 @@ const main = async () => {
   const files = await getWavFilesInDirectory(directory)
 
   if (files.length) {
-    log(`Found ${files.length} samples. Attempting to set root notes.`)
+    log(`Found ${files.length} samples:`)
     const midiNotes = []
     for (const file of files) {
       let name = getBasename(file)
@@ -122,7 +122,7 @@ const main = async () => {
 
       case 'all':
         results = await handleFiles(files, midiNotes)
-        log(`Done! Out of ${files.length} files:`)
+        log(`Done! Out of ${files.length} files in folder:`)
         log(getSummary(results))
         break
 

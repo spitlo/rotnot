@@ -1,8 +1,16 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk')
-const { table } = require('table')
+const minimist = require('minimist')
 const ora = require('ora')
+const { table } = require('table')
+
+const options = minimist(process.argv.slice(2), {
+  alias: {
+    directory: 'd',
+    all: 'a',
+  },
+})
 
 const {
   askForDirectory,
@@ -82,8 +90,13 @@ const resolveSamples = (samples, files) => {
 const main = async () => {
   // Print logo and get started
   log(chalk.yellowBright(logo))
-  const dirReply = await askForDirectory()
-  const { directory } = dirReply
+  let directory
+  if (options.directory) {
+    directory = options.directory
+  } else {
+    const dirReply = await askForDirectory()
+    directory = dirReply.directory
+  }
   const files = await getWavFilesInDirectory(directory)
 
   if (files.length) {
@@ -109,11 +122,18 @@ const main = async () => {
     estimates.unshift(['Sample name', 'Guess', 'MIDI note'])
     log(table(estimates, config.table))
 
-    // Ask user for action. Abort, do all or do some
-    log('We found the above matches.')
-    const confReply = await askForConfirmation()
+    // Ask user for action if --all flag is not set.
+    // Choices: Abort, do all or do some
+    let action
     let results
-    const { action } = confReply
+    if (options.all) {
+      action = 'all'
+    } else {
+      log('We found the above matches.')
+      const confReply = await askForConfirmation()
+      action = confReply.action
+    }
+
     switch (action) {
       case 'abort':
         log('Ok, aborting! Have a nice day :)')

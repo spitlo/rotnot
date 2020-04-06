@@ -130,8 +130,8 @@ const main = async () => {
         log('Pick the samples you want to update in the list below:')
         const allResults = await getBatchList(files, midiNotes)
         const { samples } = allResults
-        const batchFiles = resolveSamples(samples, files)
-        results = await handleFiles(batchFiles, midiNotes)
+        const someFiles = resolveSamples(samples, files)
+        results = await handleFiles(someFiles, midiNotes)
         log(`Done! Out of the ${files.length} files you picked:`)
         log(getSummary(results))
 

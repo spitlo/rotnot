@@ -1,6 +1,6 @@
 # Rotnot
 
-![Screencast of rotnot](screens/screen_0.2.0.svg)
+![Screencast of rotnot](screens/screen.svg)
 
 ## What is this?
 Rotnot tries to figure out the notes of sound samples based on their filename, and save that note as meta data in the file.

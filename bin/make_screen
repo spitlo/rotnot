@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -eu
+
+rm screens/screen.svg
+termtosvg -t window_frame -c "node index.js" screens/screen.svg

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-set -eu
+
+if command -v pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if command -v pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+pyenv deactivate && pyenv activate
 
 rm screens/screen.svg
-termtosvg -t window_frame -c "node index.js" screens/screen.svg
+termtosvg -t "./bin/template.svg" -c "node index.js" screens/screen.svg

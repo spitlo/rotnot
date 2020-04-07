@@ -104,7 +104,7 @@ const main = async () => {
     const midiNotes = []
     for (const file of files) {
       let name = getBasename(file)
-      const possibleNotes = name.match(/[a-h][#b]?[0-9]|[0-9]{1,3}/gi)
+      const possibleNotes = name.match(/[a-h][#b]?[0-9]|[0-9]{3}/gi)
       if (possibleNotes) {
         const midiNote = getMidiNote(possibleNotes)
         midiNotes.push(midiNote)

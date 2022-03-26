@@ -16,7 +16,7 @@
     "configstore": "5.0.1",
     "globby": "11.0.0",
     "inquirer": "7.1.0",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "ora": "4.0.3",
     "table": "5.4.6",
     "untildify": "4.0.0",
